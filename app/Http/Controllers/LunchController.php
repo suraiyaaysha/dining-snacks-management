@@ -21,11 +21,11 @@ class LunchController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'quantity' => 'required|numeric',
+            'item' => 'required|string|max:255',
+            'quantity_per_person' => 'required|numeric',
         ]);
 
-        Lunch::create($request->all());
+        Lunch::create($request->only(['item', 'quantity_per_person']));
 
         return redirect()->route('admin.lunch.index')->with('success', 'Lunch item added successfully.');
     }
@@ -38,11 +38,11 @@ class LunchController extends Controller
     public function update(Request $request, Lunch $lunch)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'quantity' => 'required|numeric',
+            'item' => 'required|string|max:255',
+            'quantity_per_person' => 'required|numeric',
         ]);
 
-        $lunch->update($request->all());
+        $lunch->update($request->only(['item', 'quantity_per_person']));
 
         return redirect()->route('admin.lunch.index')->with('success', 'Lunch item updated successfully.');
     }

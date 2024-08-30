@@ -12,8 +12,8 @@ class Snack extends Model
 
     protected $fillable = ['item', 'time', 'quantity_per_person'];
 
-    public function menus()
-    {
-        return $this->hasMany(Menu::class);
-    }
+    // public function menus()
+    // {
+    //     return $this->hasMany(Menu::class);
+    // }
 }

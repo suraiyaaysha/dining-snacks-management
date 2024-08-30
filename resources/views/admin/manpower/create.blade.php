@@ -1,50 +1,48 @@
-<!-- resources/views/manpower/create.blade.php -->
-{{-- @extends('admin.layouts.app')
-
-@section('main')
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        <h2>Create Manpower</h2>
-        <form action="{{ route('manpower.store') }}" method="POST">
-            @csrf
-            <div>
-                <x-label for="shift" :value="__('Shift')" />
-                <x-input id="shift" class="block mt-1 w-full" type="text" name="shift" required autofocus />
-            </div>
-            <div>
-                <x-label for="count" :value="__('Count')" />
-                <x-input id="count" class="block mt-1 w-full" type="number" name="count" required />
-            </div>
-            <x-button class="mt-4">
-                {{ __('Save') }}
-            </x-button>
-        </form>
-    </div>
-@endsection --}}
-
 @extends('admin.layouts.app')
 
 @section('main')
-    <div class="container">
-        <h2>Add Manpower</h2>
-        <form action="{{ route('admin.manpower.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="shift_a">Shift A:</label>
-                <input type="number" class="form-control" id="shift_a" name="shift_a" required>
+    <div class="px-4 pb-8 sm:px-6 lg:px-8 bg-white border border-gray-200 rounded-md">
+        <div class="sm:flex sm:items-center mt-6">
+            <div class="sm:flex-auto">
+                <h1 class="text-base font-semibold leading-6 text-gray-900">Add Manpower</h1>
             </div>
-            <div class="form-group">
-                <label for="shift_general">Shift General:</label>
-                <input type="number" class="form-control" id="shift_general" name="shift_general" required>
+        </div>
+        <div class="mt-8 flow-root">
+            <div class="-mx-4 -my-2 ">
+                <div class="py-2 align-middle sm:px-6 lg:px-8 w-[800px]">
+                    <form action="{{ route('admin.manpower.store') }}" method="POST">
+                        @csrf
+                        <div class="mb-4">
+                            <x-input-label for="shift_a" :value="__('Shift A:')" />
+                            <x-text-input id="shift_a" class="block mt-1 w-full" type="number" name="shift_a"
+                            required autofocus autocomplete="shift_a" />
+                            <x-input-error :messages="$errors->get('shift_a')" class="mt-2" />
+
+                        </div>
+                        <div class="mb-4">
+                            <x-input-label for="shift_general" :value="__('Shift General:')" />
+                            <x-text-input id="shift_general" class="block mt-1 w-full" type="number" name="shift_general"
+                            required autofocus autocomplete="shift_general" />
+                            <x-input-error :messages="$errors->get('shift_general')" class="mt-2" />
+                        </div>
+                        <div class="mb-4">
+                            <x-input-label for="shift_b" :value="__('Shift B:')" />
+                            <x-text-input id="shift_b" class="block mt-1 w-full" type="number" name="shift_b"
+                            required autofocus autocomplete="shift_b" />
+                            <x-input-error :messages="$errors->get('shift_b')" class="mt-2" />
+                        </div>
+                        <div class="mb-4">
+                            <x-input-label for="shift_c" :value="__('Shift C:')" />
+                            <x-text-input id="shift_c" class="block mt-1 w-full" type="number" name="shift_c"
+                            required autofocus autocomplete="shift_c" />
+                            <x-input-error :messages="$errors->get('shift_c')" class="mt-2" />
+                        </div>
+                        <x-primary-button class="w-full">
+                            {{ __('Add Manpower') }}
+                        </x-primary-button>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="shift_b">Shift B:</label>
-                <input type="number" class="form-control" id="shift_b" name="shift_b" required>
-            </div>
-            <div class="form-group">
-                <label for="shift_c">Shift C:</label>
-                <input type="number" class="form-control" id="shift_c" name="shift_c" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Manpower</button>
-        </form>
+        </div>
     </div>
 @endsection

@@ -10,48 +10,48 @@ class SnackController extends Controller
     public function index()
     {
         $snacks = Snack::all();
-        return view('admin.snack.index', compact('snacks'));
+        return view('admin.snacks.index', compact('snacks'));
     }
 
     public function create()
     {
-        return view('admin.snack.create');
+        return view('admin.snacks.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'quantity' => 'required|integer',
-            'shift' => 'required|string',
+            'item' => 'required|string|max:255',
+            'time' => 'required|in:morning,afternoon',
+            'quantity_per_person' => 'required|integer',
         ]);
 
-        Snack::create($request->all());
+        Snack::create($request->only(['item', 'time', 'quantity_per_person']));
 
-        return redirect()->route('admin.snack.index')->with('success', 'Snack added successfully.');
+        return redirect()->route('admin.snacks.index')->with('success', 'Snack added successfully.');
     }
 
     public function edit(Snack $snack)
     {
-        return view('snacks.edit', compact('snack'));
+        return view('admin.snacks.edit', compact('snack'));
     }
 
     public function update(Request $request, Snack $snack)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'quantity' => 'required|integer',
-            'shift' => 'required|string',
+            'item' => 'required|string|max:255',
+            'time' => 'required|in:morning,afternoon',
+            'quantity_per_person' => 'required|integer',
         ]);
 
-        $snack->update($request->all());
+        $snack->update($request->only(['item', 'time', 'quantity_per_person']));
 
-        return redirect()->route('admin.snack.index')->with('success', 'Snack updated successfully.');
+        return redirect()->route('admin.snacks.index')->with('success', 'Snack updated successfully.');
     }
 
     public function destroy(Snack $snack)
     {
         $snack->delete();
-        return redirect()->route('admin.snack.index')->with('success', 'Snack deleted successfully.');
+        return redirect()->route('admin.snacks.index')->with('success', 'Snack deleted successfully.');
     }
 }
