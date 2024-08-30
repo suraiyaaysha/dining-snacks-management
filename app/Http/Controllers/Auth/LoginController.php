@@ -24,7 +24,7 @@ class LoginController extends Controller
         //Attempt to log the user in
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             //Authentication passed
-            return redirect()->intended('dashboard');
+            return redirect()->intended(route('admin.dashboard'));
         }
 
         //Authentication failed

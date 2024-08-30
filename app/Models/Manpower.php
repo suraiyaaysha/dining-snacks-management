@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Menu;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,9 +9,12 @@ class Manpower extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'shift', 'count' ];
-
-    public function menus() {
-        return $this->hasMany(Menu::class);
-    }
+    // protected $fillable = [ 'shift', 'count' ];
+    protected $fillable = [
+        'shift_a',
+        'shift_general',
+        'shift_b',
+        'shift_c',
+        'total'
+    ];
 }
