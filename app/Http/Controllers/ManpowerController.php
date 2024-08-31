@@ -12,7 +12,7 @@ class ManpowerController extends Controller
      */
     public function index()
     {
-        $manpower = Manpower::all();
+        $manpower = Manpower::orderBy('date', 'desc')->get();
         return view('admin.manpower.index', compact('manpower'));
     }
 
@@ -34,6 +34,7 @@ class ManpowerController extends Controller
             'shift_general' => 'required|integer',
             'shift_b' => 'required|integer',
             'shift_c' => 'required|integer',
+            'date' => 'required|date',
         ]);
 
         $total = $request->shift_a + $request->shift_general + $request->shift_b + $request->shift_c;
@@ -44,6 +45,7 @@ class ManpowerController extends Controller
             'shift_b' => $request->shift_b,
             'shift_c' => $request->shift_c,
             'total' => $total,
+            'date' => $request->date,
         ]);
 
         return redirect()->route('admin.manpower.index')->with('success', 'Manpower added successfully.');
@@ -67,6 +69,7 @@ class ManpowerController extends Controller
             'shift_general' => 'required|integer',
             'shift_b' => 'required|integer',
             'shift_c' => 'required|integer',
+            'date' => 'required|date',
         ]);
 
         $total = $request->shift_a + $request->shift_general + $request->shift_b + $request->shift_c;
@@ -77,6 +80,7 @@ class ManpowerController extends Controller
             'shift_b' => $request->shift_b,
             'shift_c' => $request->shift_c,
             'total' => $total,
+            'date' => $request->date,
         ]);
 
         return redirect()->route('admin.manpower.index')->with('success', 'Manpower updated successfully.');
@@ -91,20 +95,23 @@ class ManpowerController extends Controller
         return redirect()->route('admin.manpower.index')->with('success', 'Manpower deleted successfully.');
     }
 
-    // Manpower quantity for Snacks and Lunch Distribution
     public function showManpowerQuantities()
     {
-        $manpower = Manpower::all();
+        // Retrieve all manpower records ordered by date
+        $manpower = Manpower::orderBy('date', 'desc')->get();
 
-        // Morning snacks: A shift + General shift
-        $snacksMorning = $manpower->sum('shift_a') + $manpower->sum('shift_general');
+        // Process each manpower record to calculate the quantities
+        $quantities = $manpower->map(function ($mp) {
+            return [
+                'date' => $mp->date,
+                'snacksMorning' => $mp->shift_a + $mp->shift_general,
+                'snacksAfternoon' => $mp->shift_b + $mp->shift_c,
+                'lunch' => $mp->shift_a + $mp->shift_general + $mp->shift_b,
+            ];
+        });
 
-        // Afternoon snacks: B shift + C shift
-        $snacksAfternoon = $manpower->sum('shift_b') + $manpower->sum('shift_c');
-
-        // Lunch: General shift + A shift + B shift (Exclude C shift)
-        $lunch = $manpower->sum('shift_a') + $manpower->sum('shift_general') + $manpower->sum('shift_b');
-
-        return view('admin.manpower.quantities', compact('snacksMorning', 'snacksAfternoon', 'lunch'));
+        // Pass the calculated quantities to the view
+        return view('admin.manpower.quantities', compact('quantities'));
     }
+
 }

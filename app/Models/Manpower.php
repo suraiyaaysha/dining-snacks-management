@@ -14,6 +14,7 @@ class Manpower extends Model
         'shift_general',
         'shift_b',
         'shift_c',
-        'total'
+        'total',
+        'date'
     ];
 }

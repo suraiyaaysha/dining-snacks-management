@@ -14,6 +14,12 @@
                         @csrf
 
                         <div class="mb-4">
+                            <x-input-label for="date" :value="__('Date:')" />
+                            <x-text-input id="date" class="block mt-1 w-full" type="date" name="date" required autofocus />
+                            <x-input-error :messages="$errors->get('date')" class="mt-2" />
+                        </div>
+
+                        <div class="mb-4">
                             <x-input-label for="shift_general" :value="__('Shift General:')" />
                             <x-text-input id="shift_general" class="block mt-1 w-full" type="number" name="shift_general"
                             required autofocus autocomplete="shift_general" />
