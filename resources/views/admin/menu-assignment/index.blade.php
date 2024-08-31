@@ -27,41 +27,6 @@
                             </th>
                         </tr>
                     </thead>
-                    {{-- <tbody class="divide-y divide-gray-200">
-                        @foreach($menuAssignments as $assignment)
-                            <tr>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ $assignment->day_of_week }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    @foreach(json_decode($assignment->morning_snack_ids) as $snack_id)
-                                        {{ \App\Models\Snack::find($snack_id)->item }} ({{ \App\Models\Snack::find($snack_id)->quantity_per_person }} pcs/person)<br>
-                                    @endforeach
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    @foreach(json_decode($assignment->afternoon_snack_ids) as $snack_id)
-                                        {{ \App\Models\Snack::find($snack_id)->item }} ({{ \App\Models\Snack::find($snack_id)->quantity_per_person }} pcs/person)<br>
-                                    @endforeach
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    @foreach(json_decode($assignment->lunch_ids) as $lunch_id)
-                                        {{ \App\Models\Lunch::find($lunch_id)->item }} ({{ \App\Models\Lunch::find($lunch_id)->quantity_per_person }} grams/person)<br>
-                                    @endforeach
-                                </td>
-                                <td
-                                    class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-
-                                    <a href="{{ route('admin.menu-assignment.edit', $assignment->id) }}"
-                                        class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <form action="{{ route('admin.menu-assignment.destroy', $assignment->id) }}" method="POST"
-                                        style="display:inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="text-red-600 hover:text-red-900 ml-2">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody> --}}
                     <tbody class="divide-y divide-gray-200">
                         @foreach($menuAssignments as $assignment)
                             <tr>

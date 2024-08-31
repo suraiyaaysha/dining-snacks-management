@@ -25,29 +25,6 @@ class MenuAssignmentController extends Controller
         return view('admin.menu-assignment.create', compact('morningSnacks', 'afternoonSnacks', 'lunches'));
     }
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'day_of_week' => 'required|string',
-    //         'morning_snack_ids' => 'required|array',
-    //         'morning_snack_ids.*' => 'exists:snacks,id',
-    //         'afternoon_snack_ids' => 'required|array',
-    //         'afternoon_snack_ids.*' => 'exists:snacks,id',
-    //         'lunch_ids' => 'required|array',
-    //         'lunch_ids.*' => 'exists:lunches,id',
-    //     ]);
-
-    //     $menuAssignment = new MenuAssignment([
-    //         'day_of_week' => $request->day_of_week,
-    //         'morning_snack_ids' => json_encode($request->morning_snack_ids),
-    //         'afternoon_snack_ids' => json_encode($request->afternoon_snack_ids),
-    //         'lunch_ids' => json_encode($request->lunch_ids),
-    //     ]);
-    //     $menuAssignment->save();
-
-    //     return redirect()->route('admin.menu-assignment.index')->with('success', 'Menu assigned successfully.');
-    // }
-
     public function store(Request $request)
     {
         $request->validate([
