@@ -11,7 +11,9 @@ class MenuAssignmentController extends Controller
 {
     public function index()
     {
-        $menuAssignments = MenuAssignment::all();
+        // $menuAssignments = MenuAssignment::all();
+
+        $menuAssignments = MenuAssignment::with(['morningSnacks', 'afternoonSnacks', 'lunchItems'])->get();
         return view('admin.menu-assignment.index', compact('menuAssignments'));
     }
 
@@ -22,6 +24,29 @@ class MenuAssignmentController extends Controller
         $lunches = Lunch::all();
         return view('admin.menu-assignment.create', compact('morningSnacks', 'afternoonSnacks', 'lunches'));
     }
+
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'day_of_week' => 'required|string',
+    //         'morning_snack_ids' => 'required|array',
+    //         'morning_snack_ids.*' => 'exists:snacks,id',
+    //         'afternoon_snack_ids' => 'required|array',
+    //         'afternoon_snack_ids.*' => 'exists:snacks,id',
+    //         'lunch_ids' => 'required|array',
+    //         'lunch_ids.*' => 'exists:lunches,id',
+    //     ]);
+
+    //     $menuAssignment = new MenuAssignment([
+    //         'day_of_week' => $request->day_of_week,
+    //         'morning_snack_ids' => json_encode($request->morning_snack_ids),
+    //         'afternoon_snack_ids' => json_encode($request->afternoon_snack_ids),
+    //         'lunch_ids' => json_encode($request->lunch_ids),
+    //     ]);
+    //     $menuAssignment->save();
+
+    //     return redirect()->route('admin.menu-assignment.index')->with('success', 'Menu assigned successfully.');
+    // }
 
     public function store(Request $request)
     {
@@ -35,13 +60,13 @@ class MenuAssignmentController extends Controller
             'lunch_ids.*' => 'exists:lunches,id',
         ]);
 
-        $menuAssignment = new MenuAssignment([
+        $menuAssignment = MenuAssignment::create([
             'day_of_week' => $request->day_of_week,
-            'morning_snack_ids' => json_encode($request->morning_snack_ids),
-            'afternoon_snack_ids' => json_encode($request->afternoon_snack_ids),
-            'lunch_ids' => json_encode($request->lunch_ids),
         ]);
-        $menuAssignment->save();
+
+        $menuAssignment->morningSnacks()->attach($request->morning_snack_ids, ['time' => 'morning']);
+        $menuAssignment->afternoonSnacks()->attach($request->afternoon_snack_ids, ['time' => 'afternoon']);
+        $menuAssignment->lunchItems()->attach($request->lunch_ids);
 
         return redirect()->route('admin.menu-assignment.index')->with('success', 'Menu assigned successfully.');
     }

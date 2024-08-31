@@ -27,7 +27,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200">
+                    {{-- <tbody class="divide-y divide-gray-200">
                         @foreach($menuAssignments as $assignment)
                             <tr>
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ $assignment->day_of_week }}</td>
@@ -61,7 +61,38 @@
                                 </td>
                             </tr>
                         @endforeach
+                    </tbody> --}}
+                    <tbody class="divide-y divide-gray-200">
+                        @foreach($menuAssignments as $assignment)
+                            <tr>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ $assignment->day_of_week }}</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    @foreach($assignment->morningSnacks as $snack)
+                                        {{ $snack->item }} ({{ $snack->quantity_per_person }} pcs/person)<br>
+                                    @endforeach
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    @foreach($assignment->afternoonSnacks as $snack)
+                                        {{ $snack->item }} ({{ $snack->quantity_per_person }} pcs/person)<br>
+                                    @endforeach
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    @foreach($assignment->lunchItems as $lunch)
+                                        {{ $lunch->item }} ({{ $lunch->quantity_per_person }} grams/kg)<br>
+                                    @endforeach
+                                </td>
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                                    <a href="{{ route('admin.menu-assignment.edit', $assignment->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <form action="{{ route('admin.menu-assignment.destroy', $assignment->id) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-900 ml-2">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
+                    
                 </table>
             </div>
         </div>

@@ -13,18 +13,34 @@ class MenuAssignment extends Model
 
     protected $fillable = ['day_of_week', 'morning_snack_ids', 'afternoon_snack_ids', 'lunch_ids'];
 
+    // public function morningSnacks()
+    // {
+    //     return $this->belongsToMany(Snack::class, 'morning_snack_ids');
+    // }
+
+    // public function afternoonSnacks()
+    // {
+    //     return $this->belongsToMany(Snack::class, 'afternoon_snack_ids');
+    // }
+
+    // public function lunchItems()
+    // {
+    //     return $this->belongsToMany(Lunch::class, 'lunch_ids');
+    // }
+
     public function morningSnacks()
     {
-        return $this->belongsToMany(Snack::class, 'morning_snack_ids');
+        return $this->belongsToMany(Snack::class, 'menu_assignment_snack')->wherePivot('time', 'morning');
     }
 
     public function afternoonSnacks()
     {
-        return $this->belongsToMany(Snack::class, 'afternoon_snack_ids');
+        return $this->belongsToMany(Snack::class, 'menu_assignment_snack')->wherePivot('time', 'afternoon');
     }
 
     public function lunchItems()
     {
-        return $this->belongsToMany(Lunch::class, 'lunch_ids');
+        return $this->belongsToMany(Lunch::class, 'menu_assignment_lunch');
     }
+
 }

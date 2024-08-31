@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_assignments', function (Blueprint $table) {
+        Schema::create('menu_assignment_lunch', function (Blueprint $table) {
             $table->id();
-            $table->string('day_of_week');
+            $table->foreignId('menu_assignment_id')->constrained()->onDelete('cascade');
+            $table->foreignId('lunch_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_assignments');
+        Schema::dropIfExists('menu_assignment_lunch');
     }
 };
