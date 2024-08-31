@@ -31,8 +31,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('lunch', LunchController::class);
 });
 
-// Route::get('admin/manpower-quantities', [ManpowerController::class, 'showManpowerQuantities'])->name('admin.manpower.quantities')->middleware(['auth']);
-
 // Menu Assignment Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('admin/menu-assignments', [MenuAssignmentController::class, 'index'])->name('admin.menu-assignment.index');
