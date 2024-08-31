@@ -22,6 +22,7 @@ Route::get('/', function () {
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     // Manpower Routes
     Route::resource('manpower', ManpowerController::class);
+    Route::get('manpower-quantities', [ManpowerController::class, 'showManpowerQuantities'])->name('manpower.quantities');
 
     // Snacks Routes
     Route::resource('snacks', SnackController::class);
@@ -30,14 +31,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('lunch', LunchController::class);
 });
 
-Route::get('admin/manpower-quantities', [ManpowerController::class, 'showManpowerQuantities'])->name('admin.manpower.quantities')->middleware(['auth']);
+// Route::get('admin/manpower-quantities', [ManpowerController::class, 'showManpowerQuantities'])->name('admin.manpower.quantities')->middleware(['auth']);
 
 // Menu Assignment Routes
-// Route::get('admin.menu-assignment', [MenuAssignmentController::class, 'index'])->name('admin.menu-assignment.index')->middleware(['auth']);
-// Route::post('admin.menu-assignment', [MenuAssignmentController::class, 'store'])->name('admin.menu-assignment.store')->middleware(['auth']);
-
 Route::middleware(['auth'])->group(function () {
-    // Menu Assignment Routes
     Route::get('admin/menu-assignments', [MenuAssignmentController::class, 'index'])->name('admin.menu-assignment.index');
     Route::get('admin/menu-assignments/create', [MenuAssignmentController::class, 'create'])->name('admin.menu-assignment.create');
     Route::post('admin/menu-assignments', [MenuAssignmentController::class, 'store'])->name('admin.menu-assignment.store');
@@ -47,5 +44,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Predictions & Report Routes
-Route::get('admin/predictions/snacks', [PredictionController::class, 'predictSnacks'])->name('admin.predictions.snacks')->middleware(['auth']);
-Route::get('admin/predictions/lunch', [PredictionController::class, 'predictLunch'])->name('admin.predictions.lunch')->middleware(['auth']);
+Route::get('admin/predictions', [PredictionController::class, 'showPredictions'])->name('admin.predictions.index')->middleware(['auth']);
