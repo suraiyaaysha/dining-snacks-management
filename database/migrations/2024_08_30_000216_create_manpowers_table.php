@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('manpowers', function (Blueprint $table) {
             $table->id();
-            // $table->string('shift');
-            // $table->integer('count');
             $table->integer('shift_a');
             $table->integer('shift_general');
             $table->integer('shift_b');

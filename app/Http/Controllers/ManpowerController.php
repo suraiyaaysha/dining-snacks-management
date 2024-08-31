@@ -99,13 +99,18 @@ class ManpowerController extends Controller
         return redirect()->route('admin.manpower.index')->with('success', 'Manpower deleted successfully.');
     }
 
-    // Manpower quantity
+    // Manpower quantity for Snacks and Lunch Distribution
     public function showManpowerQuantities()
     {
         $manpower = Manpower::all();
 
+        // Morning snacks: A shift + General shift
         $snacksMorning = $manpower->sum('shift_a') + $manpower->sum('shift_general');
+
+        // Afternoon snacks: B shift + C shift
         $snacksAfternoon = $manpower->sum('shift_b') + $manpower->sum('shift_c');
+
+        // Lunch: General shift + A shift + B shift (Exclude C shift)
         $lunch = $manpower->sum('shift_a') + $manpower->sum('shift_general') + $manpower->sum('shift_b');
 
         return view('admin.manpower.quantities', compact('snacksMorning', 'snacksAfternoon', 'lunch'));

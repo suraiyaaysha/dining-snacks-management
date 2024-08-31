@@ -9,7 +9,6 @@ class Manpower extends Model
 {
     use HasFactory;
 
-    // protected $fillable = [ 'shift', 'count' ];
     protected $fillable = [
         'shift_a',
         'shift_general',

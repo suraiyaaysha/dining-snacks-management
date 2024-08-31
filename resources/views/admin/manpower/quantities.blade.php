@@ -10,9 +10,11 @@
         <div class="mt-2 mb-4 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <h3>Snacks - Morning: {{ $snacksMorning }}</h3>
-                    <h3>Snacks - Afternoon: {{ $snacksAfternoon }}</h3>
-                    <h3>Lunch: {{ $lunch }}</h3>
+
+                    <h3>Snacks - Morning (A Shift + General Shift): {{ $snacksMorning }}</h3>
+                    <h3>Snacks - Afternoon (B Shift + C Shift): {{ $snacksAfternoon }}</h3>
+                    <h3>Lunch (General Shift + A Shift + B Shift): {{ $lunch }}</h3>
+
                 </div>
             </div>
         </div>
