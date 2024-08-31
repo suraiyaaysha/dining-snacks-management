@@ -12,19 +12,21 @@
                 <div class="py-2 align-middle sm:px-6 lg:px-8 w-[800px]">
                     <form action="{{ route('admin.manpower.store') }}" method="POST">
                         @csrf
-                        <div class="mb-4">
-                            <x-input-label for="shift_a" :value="__('Shift A:')" />
-                            <x-text-input id="shift_a" class="block mt-1 w-full" type="number" name="shift_a"
-                            required autofocus autocomplete="shift_a" />
-                            <x-input-error :messages="$errors->get('shift_a')" class="mt-2" />
 
-                        </div>
                         <div class="mb-4">
                             <x-input-label for="shift_general" :value="__('Shift General:')" />
                             <x-text-input id="shift_general" class="block mt-1 w-full" type="number" name="shift_general"
                             required autofocus autocomplete="shift_general" />
                             <x-input-error :messages="$errors->get('shift_general')" class="mt-2" />
                         </div>
+
+                        <div class="mb-4">
+                            <x-input-label for="shift_a" :value="__('Shift A:')" />
+                            <x-text-input id="shift_a" class="block mt-1 w-full" type="number" name="shift_a"
+                            required autofocus autocomplete="shift_a" />
+                            <x-input-error :messages="$errors->get('shift_a')" class="mt-2" />
+                        </div>
+
                         <div class="mb-4">
                             <x-input-label for="shift_b" :value="__('Shift B:')" />
                             <x-text-input id="shift_b" class="block mt-1 w-full" type="number" name="shift_b"

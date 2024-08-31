@@ -27,17 +27,6 @@ class ManpowerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'shift'=>'required',
-    //         'count'=>'required|integer',
-    //     ]);
-
-    //     Manpower::create($request->all());
-
-    //     return redirect()->route('admin.manpower.index')->with('success', 'Manpower created successfully.');
-    // }
     public function store(Request $request)
     {
         $request->validate([
@@ -104,13 +93,21 @@ class ManpowerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(string $id)
-    // {
-    //     //
-    // }
     public function destroy(Manpower $manpower)
     {
         $manpower->delete();
         return redirect()->route('admin.manpower.index')->with('success', 'Manpower deleted successfully.');
+    }
+
+    // Manpower quantity
+    public function showManpowerQuantities()
+    {
+        $manpower = Manpower::all();
+
+        $snacksMorning = $manpower->sum('shift_a') + $manpower->sum('shift_general');
+        $snacksAfternoon = $manpower->sum('shift_b') + $manpower->sum('shift_c');
+        $lunch = $manpower->sum('shift_a') + $manpower->sum('shift_general') + $manpower->sum('shift_b');
+
+        return view('admin.manpower.quantities', compact('snacksMorning', 'snacksAfternoon', 'lunch'));
     }
 }

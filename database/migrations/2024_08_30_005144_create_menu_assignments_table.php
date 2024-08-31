@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('menu_assignments', function (Blueprint $table) {
             $table->id();
             $table->string('day_of_week');
-            $table->foreignId('snack_id')->constrained()->onDelete('cascade');
-            $table->foreignId('lunch_id')->constrained()->onDelete('cascade');
+            $table->json('morning_snack_ids');
+            $table->json('afternoon_snack_ids');
+            $table->json('lunch_ids');
             $table->timestamps();
         });
     }

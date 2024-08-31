@@ -31,7 +31,7 @@
                                 <tr>
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ $snack->item }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ Str::ucfirst($snack->time) }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $snack->quantity_per_person }}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $snack->quantity_per_person }} pcs</td>
 
                                     <td
                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

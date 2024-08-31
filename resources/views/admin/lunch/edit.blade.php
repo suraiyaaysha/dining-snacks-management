@@ -20,7 +20,7 @@
                         <x-input-error :messages="$errors->get('item')" class="mt-2" />
                     </div>
                     <div class="mb-4">
-                        <x-input-label for="quantity_per_person" :value="__('Quantity Per Person:')" />
+                        <x-input-label for="quantity_per_person" :value="__('Quantity Per Person (grams/kg):')" />
                         <x-text-input id="quantity_per_person" class="block mt-1 w-full" type="number" name="quantity_per_person" value="{{ $lunch->quantity_per_person }}"
                         required autofocus autocomplete="quantity_per_person" />
                         <x-input-error :messages="$errors->get('quantity_per_person')" class="mt-2" />

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('lunches', function (Blueprint $table) {
             $table->id();
             $table->string('item');
-            $table->integer('quantity_per_person');
+            $table->decimal('quantity_per_person', 8,2);
             $table->timestamps();
         });
     }
