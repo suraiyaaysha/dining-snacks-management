@@ -13,16 +13,6 @@ class MenuAssignment extends Model
 
     protected $fillable = ['day_of_week', 'morning_snack_ids', 'afternoon_snack_ids', 'lunch_ids'];
 
-    // public function snack()
-    // {
-    //     return $this->belongsTo(Snack::class);
-    // }
-
-    // public function lunch()
-    // {
-    //     return $this->belongsTo(Lunch::class);
-    // }
-
     public function morningSnacks()
     {
         return $this->belongsToMany(Snack::class, 'morning_snack_ids');
@@ -37,5 +27,4 @@ class MenuAssignment extends Model
     {
         return $this->belongsToMany(Lunch::class, 'lunch_ids');
     }
-    
 }

@@ -11,9 +11,5 @@ class Lunch extends Model
     use HasFactory;
 
     protected $fillable = ['item', 'quantity_per_person'];
-
-    public function menus()
-    {
-        return $this->hasMany(Menu::class);
-    }
+    
 }
