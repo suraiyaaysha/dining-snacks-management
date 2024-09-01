@@ -46,9 +46,7 @@
                         <div
                             class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
                             <div class="flex h-16 shrink-0 items-center">
-                                <img class="h-8 w-auto"
-                                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                    alt="Your Company">
+                                D&SMSystem
                             </div>
                             @include('admin.layouts.sidebar-navigation')
                         </div>
@@ -62,7 +60,7 @@
                 <!-- Sidebar navigation component -->
                 <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
                     <div class="flex h-16 shrink-0 items-center font-bold">
-                        HamkoICT
+                        D&SMSystem
                     </div>
 
                     @include('admin.layouts.sidebar-navigation')
