@@ -29,6 +29,18 @@ class PredictionController extends Controller
         $nextDayTotalPeopleAfternoonSnacks = $totalPeopleAfternoonSnacks;
         $nextDayTotalPeopleLunch = $totalPeopleLunch;
 
+        // Retrieve next day's manpower data
+        $nextDayManpower = Manpower::whereDate('date', now()->addDay()->toDateString())->first();
+
+        if ($nextDayManpower) {
+            $nextDayShiftA = $nextDayManpower->shift_a;
+            $nextDayShiftB = $nextDayManpower->shift_b;
+            $nextDayShiftGeneral = $nextDayManpower->shift_general;
+            $nextDayShiftC = $nextDayManpower->shift_c;
+
+            $nextDayTotalPeopleLunch = $nextDayShiftA + $nextDayShiftB + $nextDayShiftGeneral;
+        }
+
         // Snack and lunch item predictions for today and next day
         $snackPredictionsToday = $this->calculateSnackPredictions($totalPeopleMorningSnacks, $totalPeopleAfternoonSnacks);
         $snackPredictionsNextDay = $this->calculateSnackPredictions($nextDayTotalPeopleMorningSnacks, $nextDayTotalPeopleAfternoonSnacks);
@@ -57,10 +69,10 @@ class PredictionController extends Controller
 
         foreach ($snacks as $snack) {
             if ($snack->time == 'morning') {
-                $quantity = $snack->quantity_per_person * $morning;
+                $quantity = round($snack->quantity_per_person * $morning); // Round to nearest whole number
                 $predictions['morning'][] = ['item' => $snack->item, 'quantity' => $quantity, 'unit' => 'pcs'];
             } else {
-                $quantity = $snack->quantity_per_person * $afternoon;
+                $quantity = round($snack->quantity_per_person * $afternoon); // Round to nearest whole number
                 $predictions['afternoon'][] = ['item' => $snack->item, 'quantity' => $quantity, 'unit' => 'pcs'];
             }
         }
@@ -75,7 +87,7 @@ class PredictionController extends Controller
 
         foreach ($lunches as $lunch) {
             $quantity = ($lunch->quantity_per_person * $totalPeople) / 1000; // Convert grams to kilograms
-            $predictions[] = ['item' => $lunch->item, 'quantity' => $quantity, 'unit' => 'kg'];
+            $predictions[] = ['item' => $lunch->item, 'quantity' => round($quantity, 2), 'unit' => 'kg']; // Round to 2 decimal places
         }
 
         return $predictions;

@@ -53,8 +53,13 @@
 
     {{-- Total People Taking Lunch Today --}}
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h3 class="text-xl font-medium leading-6 text-gray-900">Total People Taking Lunch Today</h3>
+        <h3 class="text-xl font-medium leading-6 text-gray-900">Total people will take Lunch Today</h3>
         <p class="text-lg text-gray-700">{{ number_format($totalPeopleLunch) }} people</p>
+    </div>
+    {{-- Total People Taking Lunch Next Day --}}
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h3 class="text-xl font-medium leading-6 text-gray-900">Total people will take Lunch Next Day</h3>
+        <p class="text-lg text-gray-700">{{ number_format($nextDayTotalPeopleLunch) }} people</p>
     </div>
 
     {{-- Lunch Predictions --}}

@@ -12,7 +12,7 @@ class ManpowerController extends Controller
      */
     public function index()
     {
-        $manpower = Manpower::orderBy('date', 'desc')->get();
+        $manpower = Manpower::orderBy('date', 'asc')->get();
         return view('admin.manpower.index', compact('manpower'));
     }
 
@@ -98,7 +98,7 @@ class ManpowerController extends Controller
     public function showManpowerQuantities()
     {
         // Retrieve all manpower records ordered by date
-        $manpower = Manpower::orderBy('date', 'desc')->get();
+        $manpower = Manpower::orderBy('date', 'asc')->get();
 
         // Process each manpower record to calculate the quantities
         $quantities = $manpower->map(function ($mp) {
