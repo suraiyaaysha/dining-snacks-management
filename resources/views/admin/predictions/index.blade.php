@@ -54,6 +54,7 @@
     {{-- Lunch Predictions --}}
     <div class="bg-white shadow-md rounded-lg p-6 mb-6">
         <h3 class="text-xl font-medium leading-6 text-gray-900">Lunch Item Qty - Today</h3>
+        <p class="text-lg text-gray-700">Number of People will take Lunch Today: {{ number_format($totalPeopleLunch) }} people</p>
         <ul class="list-disc list-inside text-gray-600 mt-2">
             @foreach($lunchPredictionsToday as $prediction)
                 <li>{{ $prediction['item'] }} - {{ $prediction['quantity'] }} {{ $prediction['unit'] }}</li>
@@ -61,6 +62,7 @@
         </ul>
 
         <h3 class="text-xl font-medium leading-6 text-gray-900 mt-8">Lunch Item Qty - Next Day</h3>
+        <p class="text-lg text-gray-700">Number of People will take Lunch Next Day: {{ number_format($nextDayTotalPeopleLunch) }} people</p>
         <ul class="list-disc list-inside text-gray-600 mt-2">
             @foreach($lunchPredictionsNextDay as $prediction)
                 <li>{{ $prediction['item'] }} - {{ $prediction['quantity'] }} {{ $prediction['unit'] }}</li>
