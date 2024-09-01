@@ -26,7 +26,6 @@ class MenuAssignmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            // 'day_of_week' => 'required|string',
             'date' => 'required|date',
             'morning_snack_ids' => 'required|array',
             'morning_snack_ids.*' => 'exists:snacks,id',
@@ -37,7 +36,6 @@ class MenuAssignmentController extends Controller
         ]);
 
         $menuAssignment = MenuAssignment::create([
-            // 'day_of_week' => $request->day_of_week,
             'date' => $request->date,
         ]);
 
@@ -65,7 +63,6 @@ class MenuAssignmentController extends Controller
     public function update(Request $request, MenuAssignment $menuAssignment)
     {
         $request->validate([
-            // 'day_of_week' => 'required|string',
             'date' => 'required|date',
             'morning_snack_ids' => 'required|array',
             'morning_snack_ids.*' => 'exists:snacks,id',
@@ -76,7 +73,6 @@ class MenuAssignmentController extends Controller
         ]);
 
         $menuAssignment->update([
-            // 'day_of_week' => $request->day_of_week,
             'date' => $request->date,
         ]);
 
