@@ -13,27 +13,40 @@ class PredictionController extends Controller
     {
         // Calculate average manpower for today
         $manpower = Manpower::all();
-        $averageMorning = $manpower->avg('shift_a') + $manpower->avg('shift_general');
-        $averageAfternoon = $manpower->avg('shift_b') + $manpower->avg('shift_c');
-        $averageLunch = $manpower->avg('shift_a') + $manpower->avg('shift_general') + $manpower->avg('shift_b');
+        $averageShiftA = $manpower->avg('shift_a');
+        $averageShiftB = $manpower->avg('shift_b');
+        $averageShiftGeneral = $manpower->avg('shift_general');
+        $averageShiftC = $manpower->avg('shift_c');
+
+        // Calculate total number of people expected to take snacks and lunch today
+        $totalPeopleMorningSnacks = $averageShiftA + $averageShiftGeneral; // A Shift + General Shift
+        $totalPeopleAfternoonSnacks = $averageShiftB + $averageShiftC;   // B Shift + C Shift
+
+        $totalPeopleLunch = $averageShiftA + $averageShiftB + $averageShiftGeneral; // A Shift + B Shift + General Shift
 
         // Assume predictions for next day are same as today
-        $nextDayMorning = $averageMorning;
-        $nextDayAfternoon = $averageAfternoon;
-        $nextDayLunch = $averageLunch;
+        $nextDayTotalPeopleMorningSnacks = $totalPeopleMorningSnacks;
+        $nextDayTotalPeopleAfternoonSnacks = $totalPeopleAfternoonSnacks;
+        $nextDayTotalPeopleLunch = $totalPeopleLunch;
 
         // Snack and lunch item predictions for today and next day
-        $snackPredictionsToday = $this->calculateSnackPredictions($averageMorning, $averageAfternoon);
-        $snackPredictionsNextDay = $this->calculateSnackPredictions($nextDayMorning, $nextDayAfternoon);
+        $snackPredictionsToday = $this->calculateSnackPredictions($totalPeopleMorningSnacks, $totalPeopleAfternoonSnacks);
+        $snackPredictionsNextDay = $this->calculateSnackPredictions($nextDayTotalPeopleMorningSnacks, $nextDayTotalPeopleAfternoonSnacks);
 
-        $lunchPredictionsToday = $this->calculateLunchPredictions($averageLunch);
-        $lunchPredictionsNextDay = $this->calculateLunchPredictions($nextDayLunch);
+        $lunchPredictionsToday = $this->calculateLunchPredictions($totalPeopleLunch);
+        $lunchPredictionsNextDay = $this->calculateLunchPredictions($nextDayTotalPeopleLunch);
 
         return view('admin.predictions.index', compact(
             'snackPredictionsToday',
             'snackPredictionsNextDay',
             'lunchPredictionsToday',
-            'lunchPredictionsNextDay'
+            'lunchPredictionsNextDay',
+            'totalPeopleMorningSnacks',
+            'totalPeopleAfternoonSnacks',
+            'totalPeopleLunch',
+            'nextDayTotalPeopleMorningSnacks',
+            'nextDayTotalPeopleAfternoonSnacks',
+            'nextDayTotalPeopleLunch'
         ));
     }
 
@@ -55,13 +68,13 @@ class PredictionController extends Controller
         return $predictions;
     }
 
-    private function calculateLunchPredictions($average)
+    private function calculateLunchPredictions($totalPeople)
     {
         $lunches = Lunch::all();
         $predictions = [];
 
         foreach ($lunches as $lunch) {
-            $quantity = ($lunch->quantity_per_person * $average) / 1000; // Convert grams to kilograms
+            $quantity = ($lunch->quantity_per_person * $totalPeople) / 1000; // Convert grams to kilograms
             $predictions[] = ['item' => $lunch->item, 'quantity' => $quantity, 'unit' => 'kg'];
         }
 
