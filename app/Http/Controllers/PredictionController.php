@@ -11,26 +11,24 @@ class PredictionController extends Controller
 {
     public function showPredictions()
     {
-        // Calculate average manpower for today
+        // Get today's date
+        $today = now()->toDateString();
+        
+        // Calculate average manpower
         $manpower = Manpower::all();
         $averageShiftA = $manpower->avg('shift_a');
         $averageShiftB = $manpower->avg('shift_b');
         $averageShiftGeneral = $manpower->avg('shift_general');
         $averageShiftC = $manpower->avg('shift_c');
 
-        // Calculate total number of people expected to take snacks and lunch today
-        $totalPeopleMorningSnacks = $averageShiftA + $averageShiftGeneral; // A Shift + General Shift
-        $totalPeopleAfternoonSnacks = $averageShiftB + $averageShiftC;   // B Shift + C Shift
+        // Calculate today's manpower
+        $totalPeopleMorningSnacks = $averageShiftA + $averageShiftGeneral;
+        $totalPeopleAfternoonSnacks = $averageShiftB + $averageShiftC;
+        $totalPeopleLunch = $averageShiftA + $averageShiftB + $averageShiftGeneral;
 
-        $totalPeopleLunch = $averageShiftA + $averageShiftB + $averageShiftGeneral; // A Shift + B Shift + General Shift
-
-        // Assume predictions for next day are same as today
-        $nextDayTotalPeopleMorningSnacks = $totalPeopleMorningSnacks;
-        $nextDayTotalPeopleAfternoonSnacks = $totalPeopleAfternoonSnacks;
-        $nextDayTotalPeopleLunch = $totalPeopleLunch;
-
-        // Retrieve next day's manpower data
-        $nextDayManpower = Manpower::whereDate('date', now()->addDay()->toDateString())->first();
+        // Predict next day's manpower
+        $nextDay = now()->addDay()->toDateString();
+        $nextDayManpower = Manpower::whereDate('date', $nextDay)->first();
 
         if ($nextDayManpower) {
             $nextDayShiftA = $nextDayManpower->shift_a;
@@ -38,10 +36,17 @@ class PredictionController extends Controller
             $nextDayShiftGeneral = $nextDayManpower->shift_general;
             $nextDayShiftC = $nextDayManpower->shift_c;
 
+            $nextDayTotalPeopleMorningSnacks = $nextDayShiftA + $nextDayShiftGeneral;
+            $nextDayTotalPeopleAfternoonSnacks = $nextDayShiftB + $nextDayShiftC;
             $nextDayTotalPeopleLunch = $nextDayShiftA + $nextDayShiftB + $nextDayShiftGeneral;
+        } else {
+            // Default to today's prediction if next day data isn't available
+            $nextDayTotalPeopleMorningSnacks = $totalPeopleMorningSnacks;
+            $nextDayTotalPeopleAfternoonSnacks = $totalPeopleAfternoonSnacks;
+            $nextDayTotalPeopleLunch = $totalPeopleLunch;
         }
 
-        // Snack and lunch item predictions for today and next day
+        // Snack and lunch item predictions
         $snackPredictionsToday = $this->calculateSnackPredictions($totalPeopleMorningSnacks, $totalPeopleAfternoonSnacks);
         $snackPredictionsNextDay = $this->calculateSnackPredictions($nextDayTotalPeopleMorningSnacks, $nextDayTotalPeopleAfternoonSnacks);
 
