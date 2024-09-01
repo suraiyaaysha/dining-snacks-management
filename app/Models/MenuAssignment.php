@@ -11,16 +11,20 @@ class MenuAssignment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['day_of_week', 'morning_snack_ids', 'afternoon_snack_ids', 'lunch_ids'];
+    protected $fillable = ['day_of_week'];
 
     public function morningSnacks()
     {
-        return $this->belongsToMany(Snack::class, 'menu_assignment_snack')->wherePivot('time', 'morning');
+        return $this->belongsToMany(Snack::class, 'menu_assignment_snack')
+                    ->withPivot('time')
+                    ->wherePivot('time', 'morning');
     }
 
     public function afternoonSnacks()
     {
-        return $this->belongsToMany(Snack::class, 'menu_assignment_snack')->wherePivot('time', 'afternoon');
+        return $this->belongsToMany(Snack::class, 'menu_assignment_snack')
+                    ->withPivot('time')
+                    ->wherePivot('time', 'afternoon');
     }
 
     public function lunchItems()

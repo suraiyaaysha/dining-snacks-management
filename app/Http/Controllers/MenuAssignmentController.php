@@ -11,8 +11,6 @@ class MenuAssignmentController extends Controller
 {
     public function index()
     {
-        // $menuAssignments = MenuAssignment::all();
-
         $menuAssignments = MenuAssignment::with(['morningSnacks', 'afternoonSnacks', 'lunchItems'])->get();
         return view('admin.menu-assignment.index', compact('menuAssignments'));
     }
@@ -52,11 +50,14 @@ class MenuAssignmentController extends Controller
     {
         $morningSnacks = Snack::where('time', 'morning')->get();
         $afternoonSnacks = Snack::where('time', 'afternoon')->get();
-        $lunches = Lunch::all();
-        $menuAssignment->morning_snack_ids = json_decode($menuAssignment->morning_snack_ids);
-        $menuAssignment->afternoon_snack_ids = json_decode($menuAssignment->afternoon_snack_ids);
-        $menuAssignment->lunch_ids = json_decode($menuAssignment->lunch_ids);
-        return view('admin.menu-assignment.edit', compact('menuAssignment', 'morningSnacks', 'afternoonSnacks', 'lunches'));
+        $lunchItems = Lunch::all();
+    
+        // Ensure these attributes are arrays
+        $menuAssignment->morning_snack_ids = $menuAssignment->morning_snack_ids ?? [];
+        $menuAssignment->afternoon_snack_ids = $menuAssignment->afternoon_snack_ids ?? [];
+        $menuAssignment->lunch_ids = $menuAssignment->lunch_ids ?? [];
+        
+        return view('admin.menu-assignment.edit', compact('menuAssignment', 'morningSnacks', 'afternoonSnacks', 'lunchItems'));
     }
 
     public function update(Request $request, MenuAssignment $menuAssignment)
@@ -73,10 +74,17 @@ class MenuAssignmentController extends Controller
 
         $menuAssignment->update([
             'day_of_week' => $request->day_of_week,
-            'morning_snack_ids' => json_encode($request->morning_snack_ids),
-            'afternoon_snack_ids' => json_encode($request->afternoon_snack_ids),
-            'lunch_ids' => json_encode($request->lunch_ids),
         ]);
+
+        // Detach existing items
+        $menuAssignment->morningSnacks()->detach();
+        $menuAssignment->afternoonSnacks()->detach();
+        $menuAssignment->lunchItems()->detach();
+
+        // Attach new items
+        $menuAssignment->morningSnacks()->attach($request->morning_snack_ids, ['time' => 'morning']);
+        $menuAssignment->afternoonSnacks()->attach($request->afternoon_snack_ids, ['time' => 'afternoon']);
+        $menuAssignment->lunchItems()->attach($request->lunch_ids);
 
         return redirect()->route('admin.menu-assignment.index')->with('success', 'Menu updated successfully.');
     }

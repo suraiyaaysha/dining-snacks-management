@@ -25,7 +25,7 @@
                         <x-input-label for="morning_snack_ids" :value="__('Select Morning Snacks:')" />
                         <select class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" id="morning_snack_ids" name="morning_snack_ids[]" multiple>
                             @foreach($morningSnacks as $snack)
-                                <option value="{{ $snack->id }}" {{ in_array($snack->id, $menuAssignment->morning_snack_ids) ? 'selected' : '' }}>
+                                <option value="{{ $snack->id }}" {{ in_array($snack->id, $menuAssignment->morningSnacks->pluck('id')->toArray()) ? 'selected' : '' }}>
                                     {{ $snack->item }} ({{ $snack->quantity_per_person }} pcs/person)
                                 </option>
                             @endforeach
@@ -37,7 +37,7 @@
                         <x-input-label for="afternoon_snack_ids" :value="__('Select Afternoon Snacks:')" />
                         <select class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" id="afternoon_snack_ids" name="afternoon_snack_ids[]" multiple>
                             @foreach($afternoonSnacks as $snack)
-                                <option value="{{ $snack->id }}" {{ in_array($snack->id, $menuAssignment->afternoon_snack_ids) ? 'selected' : '' }}>
+                                <option value="{{ $snack->id }}" {{ in_array($snack->id, $menuAssignment->afternoonSnacks->pluck('id')->toArray()) ? 'selected' : '' }}>
                                     {{ $snack->item }} ({{ $snack->quantity_per_person }} pcs/person)
                                 </option>
                             @endforeach
@@ -46,11 +46,11 @@
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="lunch_ids" :value="__('Select Lunch Items:')" />
+                        <x-input-label for="lunch_ids" :value="__('Select Lunch:')" />
                         <select class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" id="lunch_ids" name="lunch_ids[]" multiple>
-                            @foreach($lunches as $lunch)
-                                <option value="{{ $lunch->id }}" {{ in_array($lunch->id, $menuAssignment->lunch_ids) ? 'selected' : '' }}>
-                                    {{ $lunch->item }} ({{ $lunch->quantity_per_person }} grams/person)
+                            @foreach($lunchItems as $lunch)
+                                <option value="{{ $lunch->id }}" {{ in_array($lunch->id, $menuAssignment->lunchItems->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                    {{ $lunch->item }} ({{ $lunch->quantity_per_person }} pcs/person)
                                 </option>
                             @endforeach
                         </select>
