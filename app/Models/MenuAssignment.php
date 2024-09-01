@@ -11,7 +11,7 @@ class MenuAssignment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['day_of_week'];
+    protected $fillable = ['date'];
 
     public function morningSnacks()
     {

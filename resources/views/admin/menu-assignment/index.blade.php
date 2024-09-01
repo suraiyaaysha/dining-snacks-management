@@ -18,7 +18,7 @@
                     <thead>
                         <tr>
                             <th scope="col"
-                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Day of Week</th>
+                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Day of Week/Date</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Morning Snacks Items</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Afternoon Snacks Items</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Lunch Items</th>
@@ -30,7 +30,7 @@
                     <tbody class="divide-y divide-gray-200">
                         @foreach($menuAssignments as $assignment)
                             <tr>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ $assignment->day_of_week }}</td>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ \Carbon\Carbon::parse($assignment->date)->format('l-d F-Y') }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     @foreach($assignment->morningSnacks as $snack)
                                         {{ $snack->item }} ({{ $snack->quantity_per_person }} pcs/person)<br>

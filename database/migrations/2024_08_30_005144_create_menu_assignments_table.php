@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('menu_assignments', function (Blueprint $table) {
             $table->id();
-            $table->string('day_of_week');
+            $table->date('date');
             $table->timestamps();
         });
     }

@@ -15,10 +15,9 @@
                     @method('PUT')
 
                     <div class="mb-4">
-                        <x-input-label for="day_of_week" :value="__('Day of Week:')" />
-                        <x-text-input id="day_of_week" class="block mt-1 w-full" type="text" name="day_of_week" value="{{ $menuAssignment->day_of_week }}"
-                        required autofocus autocomplete="day_of_week" />
-                        <x-input-error :messages="$errors->get('day_of_week')" class="mt-2" />
+                        <x-input-label for="date" :value="__('Date:')" />
+                        <x-text-input id="date" class="block mt-1 w-full" type="date" name="date" required autofocus value="{{ $manpower->date ?? old('date') }}" />
+                        <x-input-error :messages="$errors->get('date')" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
